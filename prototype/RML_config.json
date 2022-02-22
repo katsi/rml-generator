@@ -1,0 +1,6 @@
+{
+    "JSON File" : "http://semweb.mmlab.be/ns/ql#JSONPath",
+    "XML File" : "http://semweb.mmlab.be/ns/ql#XPath",
+    "CSV File" : "http://semweb.mmlab.be/ns/ql#CSV"
+
+}

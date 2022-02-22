@@ -1,0 +1,38 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix schema: <http://schema.org/>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wgs84_pos: <http://www.w3.org/2003/01/geo/wgs84_pos#>.
+@prefix gn: <http://www.geonames.org/ontology#>.
+@prefix ds: <https://www.example.org/dataSource#> .
+@prefix : <https://www.example.org/mappingSchema/> .
+
+#Mapping Schema
+:mapsTo a owl:ObjectProperty ;
+    rdfs:comment "The mapping logic means that the subject of this triple is mapped against the object of this triple, may it be a class or a property." .
+
+:hasNamespace a owl:DatatypeProperty ;
+    rdfs:comment "Defines the global part of the IRI for all instances created from the subject's value." .
+
+:hasLocalNamePattern a owl:DatatypeProperty ;
+    rdfs:comment "Defines the pattern for the local part of the IRI for all instances created from the subject's value. Refer to __self__ as a placeholder for the value." .
+
+:subjectOf a owl:ObjectProperty ;
+    rdfs:comment "Defines that the subject of this triple holds values out of which instances are created from." .
+
+:objectOf a owl:ObjectProperty ;
+    rdfs:comment "The subject of this triple defines the objects for the object of this triple." .
+
+#Mapping
+ds:city :mapsTo schema:City ;
+    :hasNamespace "http://loc.example.com/city/" ;
+    :hasLocalNamePattern "{__self__}" ;
+    :subjectOf ds:venueJSON .
+
+ds:latitude :mapsTo wgs84_pos:lat ;
+    :objectOf ds:city .
+ds:longitude :mapsTo wgs84_pos:long  ;
+    :objectOf ds:city .
+ds:country :mapsTo gn:countryCode ;
+    :objectOf ds:city .

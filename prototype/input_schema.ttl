@@ -1,0 +1,72 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:<http://www.w3.org/2004/02/skos/core#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+@prefix dss: <https://www.example.org/dataSourceSchema/> .
+@prefix : <https://www.example.org/dataSource#> .
+
+#Data Source Schema Definitions
+
+dss:SourceFile a owl:Class ;
+    rdfs:label "Source File" ;
+    rdfs:comment "Super class for all types of source files." .
+
+dss:JSONFile rdfs:subClassOf dss:SourceFile ;
+    rdfs:label "JSON File" .
+
+dss:CSVFile rdfs:subClassOf dss:SourceFile ;
+    rdfs:label "CSV File" .
+
+dss:XMLFile rdfs:subClassOf dss:SourceFile ;
+    rdfs:label "XML File" .
+
+dss:key a owl:Class ;
+    rdfs:label "key" ;
+    rdfs:comment "The key of a JSON Object." .
+
+dss:localPath a owl:DatatypeProperty ;
+    rdfs:label "local path" ;
+    rdfs:comment "The literal for the local part of the file path." .
+
+dss:refersTo a owl:ObjectProperty ;
+    rdfs:label "refers to" ;
+    rdfs:comment "The property that connects key to another key in a JSON Object." .
+
+dss:hasRootKey a owl:ObjectProperty ;
+    rdfs:label "has root key" ;
+    rdfs:comment "The property that connects the JSONFile to its root key(s)." .
+
+#Data Source Definition of Venue.json
+
+:venueJSON a dss:JSONFile ;
+    skos:prefLabel "Venue" ;
+    dss:localPath "Venue.json" ;
+    rml:iterator "$" ;
+    dss:hasRootKey :venue, :location .
+
+:venue a dss:key ;
+    skos:prefLabel "venue" ;
+    dss:refersTo :latitude, :longitude .  
+
+:location a dss:key ;
+    skos:prefLabel "location" ;
+    dss:refersTo :continent, :country, :city .
+
+:latitude a dss:key ;
+    skos:prefLabel "latitude" .
+
+:longitude a dss:key ;
+    skos:prefLabel "longitude" .
+
+:continent a dss:key ;
+    skos:prefLabel "continent" .
+
+:country a dss:key ;
+    skos:prefLabel "country" .
+
+:city a dss:key ;
+    skos:prefLabel "city" .

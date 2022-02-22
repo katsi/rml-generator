@@ -1,0 +1,14 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dss: <https://www.example.org/dataSourceSchema/>
+PREFIX rml: <http://semweb.mmlab.be/ns/rml#>
+
+SELECT ?src ?srcName ?srcFileName ?fileType ?iterator
+WHERE {
+    ?src a/rdfs:subClassOf* <https://www.example.org/dataSourceSchema/SourceFile> ;
+        a ?srcFileType ;
+        skos:prefLabel ?srcName ;
+        dss:localPath ?srcFileName ;
+        rml:iterator ?iterator .
+    ?srcFileType rdfs:label ?fileType .
+}
